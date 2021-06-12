@@ -16,7 +16,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>com.bluckham.App</start-class>
-        <java.version>1.15</java.version>
+        <java.version>15</java.version>
         <lombok.version>RELEASE</lombok.version>
         <log4jdbc.log4j2.version>RELEASE</log4jdbc.log4j2.version>
         <rest.assured.version>RELEASE</rest.assured.version>
@@ -26,7 +26,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
