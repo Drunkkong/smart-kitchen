@@ -21,9 +21,9 @@ public class KitchenDAO {
     private Connection connect() {
         Connection conn = null;
         try {
-            String url = "jdbc:postgresql://localhost:2342/inventory";
-            String user = "postgres";
-            String password = "Drunkkong1";
+            var url = "jdbc:postgresql://localhost:2342/inventory";
+            var user = "postgres";
+            var password = "Drunkkong1";
             conn = DriverManager.getConnection(url, user, password);
             logger.info("Connection setup");
         } catch (SQLException e) {
@@ -34,11 +34,11 @@ public class KitchenDAO {
     }
 
     public Blog getRandomRecipe() {
-        int blogCount = 0;
+        var blogCount = 0;
         List<Blog> blogList = new ArrayList<>();
         Random rand = null;
         try {
-            rand = SecureRandom.getInstance("NativePRNG");
+            rand = SecureRandom.getInstance("SHA1PRNG");
         } catch (NoSuchAlgorithmException e) {
             logger.severe(e.getMessage());
             System.exit(1);
@@ -47,15 +47,15 @@ public class KitchenDAO {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Blog blog = new Blog();
+                var blog = new Blog();
                 blog.setName(rs.getString("name"));
                 blog.setUrl(rs.getString("url"));
                 blogList.add(blog);
                 blogCount++;
             }
 
-        } catch (SQLException throwables) {
-            logger.severe(throwables.getMessage());
+        } catch (SQLException sqlException) {
+            logger.severe(sqlException.getMessage());
             System.exit(500);
         }
         return blogList.get(rand.nextInt(blogCount));

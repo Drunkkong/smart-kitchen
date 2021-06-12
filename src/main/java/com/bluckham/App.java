@@ -13,6 +13,6 @@ public class App {
         var scraper = new WebScraper();
 
         var blog = dao.getRandomRecipe();
-        logger.info("Blog: " + blog.getName() + " Recipe: " + scraper.getRandomRecipe(blog));
+        logger.info("Blog: " + blog.getName() + "\nRecipe: " + scraper.getRandomRecipe(blog));
     }
 }
