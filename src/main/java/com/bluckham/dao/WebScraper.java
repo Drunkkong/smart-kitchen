@@ -21,7 +21,7 @@ public class WebScraper {
     public String getRandomRecipe(@NotNull Blog blog) {
         Document document = null;
         Set<String> recipeSet = new HashSet<>();
-        Random rand = new Random(System.currentTimeMillis());
+        var rand = new Random(System.currentTimeMillis());
         switch (blog.getName().toLowerCase(Locale.ROOT)) {
             case "hot for food":
                 try {
