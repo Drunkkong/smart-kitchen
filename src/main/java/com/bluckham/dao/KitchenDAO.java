@@ -43,7 +43,7 @@ public class KitchenDAO {
             logger.severe(e.getMessage());
             System.exit(1);
         }
-        try(PreparedStatement ps = connection.prepareStatement("SELECT * FROM blogs")) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM blogs")) {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
