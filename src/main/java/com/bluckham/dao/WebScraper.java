@@ -18,6 +18,7 @@ public class WebScraper {
     private static final Logger logger = Logger.getLogger(WebScraper.class.getName());
 
     // TODO
+    // Hard coded query values based on testing
     public String getRandomRecipe(@NotNull Blog blog) {
         Document document = null;
         Set<String> recipeSet = new HashSet<>();
