@@ -51,6 +51,7 @@ public class WebScraper {
 
                 return (String) recipeSet.toArray()[rand.nextInt(recipeSet.size())];
             case "nora cooks":
+            case "savory vegan":
             case "minimalist baker":
                 try {
                     document =
