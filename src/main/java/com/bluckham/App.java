@@ -3,6 +3,7 @@ package com.bluckham;
 import com.bluckham.dao.KitchenDAO;
 import com.bluckham.dao.WebScraper;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class App {
@@ -13,6 +14,8 @@ public class App {
         var scraper = new WebScraper();
 
         var blog = dao.getRandomRecipe();
-        logger.info("Blog: " + blog.getName() + "\nRecipe: " + scraper.getRandomRecipe(blog));
+        logger.log(Level.INFO, "Blog: {0}\nRecipe: {1}", new Object[]{blog.getName(), scraper.getRandomRecipe(blog)});
+        var savedRecipeList = dao.retrieveFavoriteRecipes();
+        logger.log(Level.INFO, "savedRecipeList {0}", savedRecipeList);
     }
 }

@@ -1,6 +1,7 @@
 package com.bluckham.dao;
 
 import com.bluckham.model.Blog;
+import com.bluckham.model.SavedRecipe;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -64,5 +65,30 @@ public class KitchenDAO {
     // TODO
     public String getSpecificBlogRecipe() {
         return null;
+    }
+
+    public List<SavedRecipe> retrieveFavoriteRecipes() {
+        List<SavedRecipe> savedRecipeList = new ArrayList<>();
+        try (PreparedStatement ps =
+                     connection.prepareStatement("SELECT * FROM saved_recipes WHERE favorite = TRUE AND dislike = " +
+                             "FALSE")) {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                var savedRecipe = new SavedRecipe();
+                savedRecipe.setRecipeName(rs.getString("recipe_name"));
+                savedRecipe.setUrl(rs.getString("url"));
+                savedRecipe.setBlog(rs.getString("blog"));
+                savedRecipe.setFavorite(rs.getBoolean("favorite"));
+                savedRecipe.setDislike(rs.getBoolean("dislike"));
+                savedRecipe.setCategory(rs.getString("category"));
+                savedRecipe.setCookTime(rs.getString("cook_time"));
+                savedRecipeList.add(savedRecipe);
+            }
+        } catch (SQLException ex) {
+            logger.severe(ex.getMessage());
+            System.exit(500);
+        }
+        return savedRecipeList;
     }
 }

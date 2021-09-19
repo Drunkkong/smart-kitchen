@@ -1,8 +1,4 @@
 
-Z
-*src/main/java/com/bluckham/model/Blog.java,2\2\22fa474a5d3cd8a3a1b08b1228eed6a4a849d3a8
-^
-.src/main/java/com/bluckham/util/Constants.java,1\4\14cac5d51bd4f74d6b49d3c03754e3ce98bf9150
 W
 'src/test/java/com/bluckham/AppTest.java,c\6\c6653bebd38441c9b82aa47538b44a50d973a6d6
 ;
@@ -16,9 +12,7 @@ K
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 ^
-.src/main/java/com/bluckham/dao/WebScraper.java,0\7\070245d46e30585e79fc9f079a2f2e22451fac50
-^
-.src/main/java/com/bluckham/dao/KitchenDAO.java,8\1\81aa952028706402f71fd9e4e395aadf3680cab6
-S
-#src/main/java/com/bluckham/App.java,2\5\25c8e9e7f63d8ac3afd6aeeb4487d69a8953ff26
+.src/main/java/com/bluckham/util/Constants.java,1\4\14cac5d51bd4f74d6b49d3c03754e3ce98bf9150
