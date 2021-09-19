@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class KitchenDAO {
@@ -26,9 +27,9 @@ public class KitchenDAO {
             var user = "postgres";
             var password = "Drunkkong1";
             conn = DriverManager.getConnection(url, user, password);
-            logger.info("Connection setup");
+            logger.log(Level.INFO, "Connection setup");
         } catch (SQLException e) {
-            logger.severe(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage());
             System.exit(500);
         }
         return conn;
@@ -41,7 +42,7 @@ public class KitchenDAO {
         try {
             rand = SecureRandom.getInstance("SHA1PRNG");
         } catch (NoSuchAlgorithmException e) {
-            logger.severe(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage());
             System.exit(1);
         }
         try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM blogs")) {
@@ -56,7 +57,7 @@ public class KitchenDAO {
             }
 
         } catch (SQLException sqlException) {
-            logger.severe(sqlException.getMessage());
+            logger.log(Level.SEVERE, sqlException.getMessage());
             System.exit(500);
         }
         return blogList.get(rand.nextInt(blogCount));
@@ -86,7 +87,7 @@ public class KitchenDAO {
                 savedRecipeList.add(savedRecipe);
             }
         } catch (SQLException ex) {
-            logger.severe(ex.getMessage());
+            logger.log(Level.SEVERE, ex.getMessage());
             System.exit(500);
         }
         return savedRecipeList;

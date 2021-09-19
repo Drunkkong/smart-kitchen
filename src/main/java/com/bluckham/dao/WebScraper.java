@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class WebScraper {
@@ -29,7 +30,7 @@ public class WebScraper {
                     document =
                             Jsoup.connect(blog.getUrl()).data("s", "seitan").userAgent(Constants.CHROME).timeout(Constants.DEFAULT_TIMEOUT).get();
                 } catch (IOException e) {
-                    logger.severe(e.getMessage());
+                    logger.log(Level.SEVERE, e.getMessage());
                     System.exit(1);
                 }
                 for (Element element : document.select("a[href*=/recipes/]"))
@@ -42,7 +43,7 @@ public class WebScraper {
                             Jsoup.connect("https://www.avantgardevegan.com/recipes").data("_sf_s", "sandwich").userAgent(
                                     Constants.CHROME).timeout(Constants.DEFAULT_TIMEOUT).get();
                 } catch (IOException e) {
-                    logger.severe(e.getMessage());
+                    logger.log(Level.SEVERE, e.getMessage());
                     System.exit(1);
                 }
 
@@ -57,7 +58,7 @@ public class WebScraper {
                     document =
                             Jsoup.connect(blog.getUrl()).data("s", "seitan").userAgent(Constants.CHROME).timeout(Constants.DEFAULT_TIMEOUT).get();
                 } catch (IOException e) {
-                    logger.severe(e.getMessage());
+                    logger.log(Level.SEVERE, e.getMessage());
                     System.exit(1);
                 }
                 for (Element element : document.select("a[href]"))
