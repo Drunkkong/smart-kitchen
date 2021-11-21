@@ -2,6 +2,7 @@ package com.bluckham.dao;
 
 import com.bluckham.model.Blog;
 import com.bluckham.model.SavedRecipe;
+import org.jetbrains.annotations.NotNull;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -63,9 +64,28 @@ public class KitchenDAO {
         return blogList.get(rand.nextInt(blogCount));
     }
 
-    // TODO
-    public String getSpecificBlogRecipe() {
-        return null;
+    public SavedRecipe getSpecificBlogRecipe(String blogName, String recipeName) {
+        var savedRecipe = new SavedRecipe();
+        try (PreparedStatement ps = connection.prepareStatement("SELECT TOP 1 FROM saved_recipes WHERE blog = ? " +
+                "AND recipe_name = ?")) {
+            ps.setString(1, blogName);
+            ps.setString(2, recipeName);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.first()) {
+                savedRecipe.setRecipeName(rs.getString("recipe_name"));
+                savedRecipe.setUrl(rs.getString("url"));
+                savedRecipe.setBlog(rs.getString("blog"));
+                savedRecipe.setFavorite(rs.getBoolean("favorite"));
+                savedRecipe.setDislike(rs.getBoolean("dislike"));
+                savedRecipe.setCategory(rs.getString("category"));
+                savedRecipe.setCookTime(rs.getString("cook_time"));
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, ex.getMessage());
+            System.exit(500);
+        }
+        return savedRecipe;
     }
 
     public List<SavedRecipe> retrieveFavoriteRecipes() {
@@ -91,5 +111,33 @@ public class KitchenDAO {
             System.exit(500);
         }
         return savedRecipeList;
+    }
+
+    public void setFavoriteRecipe(@NotNull SavedRecipe savedRecipe) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT TOP 1 FROM saved_recipes WHERE url = ?")) {
+            ps.setString(1, savedRecipe.getUrl());
+            ResultSet rs = ps.executeQuery();
+            if (rs.first())
+                ; // Update favorite to true
+            else {
+                try (PreparedStatement insert = connection.prepareStatement("INSERT INTO saved_recipes (recipe_name, " +
+                        "url, blog, favorite, dislike, category, cook_time) VALUES (?, ?, " +
+                        "?, ?, ?, ?, ?")) {
+                    insert.setString(1, savedRecipe.getRecipeName());
+                    insert.setString(2, savedRecipe.getUrl());
+                    insert.setString(3, savedRecipe.getBlog());
+                    insert.setBoolean(4, true);
+                    insert.setBoolean(5, false);
+                    insert.setString(6, savedRecipe.getCategory());
+                    insert.setString(7, savedRecipe.getCookTime());
+                    insert.executeQuery();
+                } catch (SQLException ex) {
+                    throw ex;
+                }
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, ex.getMessage());
+            System.exit(500);
+        }
     }
 }
