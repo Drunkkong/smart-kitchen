@@ -140,6 +140,7 @@ public class KitchenDAO {
             insert.setString(7, savedRecipe.getCookTime());
             insert.executeQuery();
         } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "Insert Failed");
             throw ex;
         }
     }
@@ -151,6 +152,7 @@ public class KitchenDAO {
             update.setString(2, savedRecipe.getUrl());
             update.executeQuery();
         } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "Update Failed");
             throw ex;
         }
     }
