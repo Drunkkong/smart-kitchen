@@ -118,26 +118,40 @@ public class KitchenDAO {
             ps.setString(1, savedRecipe.getUrl());
             ResultSet rs = ps.executeQuery();
             if (rs.first())
-                ; // Update favorite to true
-            else {
-                try (PreparedStatement insert = connection.prepareStatement("INSERT INTO saved_recipes (recipe_name, " +
-                        "url, blog, favorite, dislike, category, cook_time) VALUES (?, ?, " +
-                        "?, ?, ?, ?, ?")) {
-                    insert.setString(1, savedRecipe.getRecipeName());
-                    insert.setString(2, savedRecipe.getUrl());
-                    insert.setString(3, savedRecipe.getBlog());
-                    insert.setBoolean(4, true);
-                    insert.setBoolean(5, false);
-                    insert.setString(6, savedRecipe.getCategory());
-                    insert.setString(7, savedRecipe.getCookTime());
-                    insert.executeQuery();
-                } catch (SQLException ex) {
-                    throw ex;
-                }
-            }
+                updateFavorite(savedRecipe);
+            else
+                insertNewFavorite(savedRecipe);
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, ex.getMessage());
             System.exit(500);
+        }
+    }
+
+    private void insertNewFavorite(@NotNull SavedRecipe savedRecipe) throws SQLException {
+        try (PreparedStatement insert = connection.prepareStatement("INSERT INTO saved_recipes (recipe_name, " +
+                "url, blog, favorite, dislike, category, cook_time) VALUES (?, ?, " +
+                "?, ?, ?, ?, ?")) {
+            insert.setString(1, savedRecipe.getRecipeName());
+            insert.setString(2, savedRecipe.getUrl());
+            insert.setString(3, savedRecipe.getBlog());
+            insert.setBoolean(4, true);
+            insert.setBoolean(5, false);
+            insert.setString(6, savedRecipe.getCategory());
+            insert.setString(7, savedRecipe.getCookTime());
+            insert.executeQuery();
+        } catch (SQLException ex) {
+            throw ex;
+        }
+    }
+
+    private void updateFavorite(@NotNull SavedRecipe savedRecipe) throws SQLException {
+        try (PreparedStatement update =
+                     connection.prepareStatement("UPDATE saved_recipes SET favorite = ? WHERE url = ?")) {
+            update.setBoolean(1, true);
+            update.setString(2, savedRecipe.getUrl());
+            update.executeQuery();
+        } catch (SQLException ex) {
+            throw ex;
         }
     }
 }
