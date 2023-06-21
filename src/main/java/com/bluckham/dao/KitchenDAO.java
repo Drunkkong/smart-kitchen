@@ -23,7 +23,7 @@ public class KitchenDAO {
         try {
             var url = "jdbc:postgresql://localhost:2342/inventory";
             var user = "postgres";
-            var password = "Drunkkong1";
+            var password = "password";
             conn = DriverManager.getConnection(url, user, password);
             logger.info("Connection setup");
         } catch (SQLException e) {
